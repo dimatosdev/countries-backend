@@ -1,6 +1,7 @@
 package com.mngs.countries.countries_backend.entities;
 
 import jakarta.persistence.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 
@@ -18,6 +19,9 @@ public class Usuario {
 
     private String nome;
     private boolean administrador;
+
+    public Usuario() {}
+
 
     public Usuario(Long id, String login, String senha, String nome, boolean administrador) {
         this.id = id;
@@ -67,5 +71,11 @@ public class Usuario {
         this.administrador = administrador;
     }
 
+    @PrePersist
+    public void criptografarSenha() {
+        if (this.senha != null && !this.senha.startsWith("$2a$")) {
+            this.senha = new BCryptPasswordEncoder().encode(this.senha);
+        }
+    }
 
 }

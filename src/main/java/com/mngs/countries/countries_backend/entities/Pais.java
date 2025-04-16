@@ -17,6 +17,8 @@ public class Pais {
     @Column(unique=true, nullable=false)
     private String gentilico;
 
+    public Pais() {}
+
     public Pais(int id, String nome, String sigla, String gentilico) {
         this.id = id;
         this.nome = nome;
