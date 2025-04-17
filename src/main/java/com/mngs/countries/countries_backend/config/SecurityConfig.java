@@ -18,7 +18,15 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // desabilita CSRF para facilitar testes com o H2
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/h2-console/**", "/usuario/**", "/pais/**").permitAll()
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/v3/api-docs/**",
+                                "/h2-console/**",
+                                "/usuario/**",
+                                "/pais/**",
+                                "/api/**"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
 

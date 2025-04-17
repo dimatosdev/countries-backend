@@ -1,10 +1,23 @@
 package com.mngs.countries.countries_backend.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = "Objeto que representa um usuário autenticado.")
 public class UsuarioAutenticado {
+
+    @Schema(description = "Login do usuário", example = "admin")
     private String login;
+
+    @Schema(description = "Nome completo do usuário", example = "Administrador Geral")
     private String nome;
+
+    @Schema(description = "Token de autenticação", example = "eyJhbGciOiJIUzI1NiIsInR5cCI6...")
     private String token;
+
+    @Schema(description = "Indica se o usuário é administrador", example = "true")
     private boolean administrador;
+
+    @Schema(description = "Indica se a autenticação foi bem-sucedida", example = "true")
     private boolean autenticado;
 
     public UsuarioAutenticado(String login, String nome, String token, boolean administrador, boolean autenticado) {

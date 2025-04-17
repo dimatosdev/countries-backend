@@ -1,25 +1,23 @@
-package com.mngs.countries.countries_backend.entities;
+package com.mngs.countries.countries_backend.dto;
 
-import jakarta.persistence.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-@Entity
-public class Pais {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Schema(description = "Objeto de requisição para criação ou edição de um país")
+public class PaisRequest {
+
+    @Schema(description = "ID do país (para edição)", example = "1")
     private Long id;
 
-    @Column(unique=true, nullable=false)
+    @Schema(description = "Nome do país", example = "Brasil", required = true)
     private String nome;
 
-    @Column(unique=true, nullable=false)
+    @Schema(description = "Sigla do país", example = "BR", required = true)
     private String sigla;
 
-    @Column(unique=true, nullable=false)
+    @Schema(description = "Gentílico do país", example = "brasileiro", required = true)
     private String gentilico;
 
-    public Pais() {}
-
-    public Pais(Long id, String nome, String sigla, String gentilico) {
+    public PaisRequest(Long id, String nome, String sigla, String gentilico) {
         this.id = id;
         this.nome = nome;
         this.sigla = sigla;

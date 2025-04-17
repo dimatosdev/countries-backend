@@ -29,7 +29,7 @@ public class AutenticacaoService {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if (userOpt.isPresent() && encoder.matches(senha, userOpt.get().getSenha())) {
             String novoToken = UUID.randomUUID().toString();
-            LocalDateTime expiracao = LocalDateTime.now().plusMinutes(5);
+            LocalDateTime expiracao = LocalDateTime.now().plusMinutes(1);
 
             Token token = new Token(null, novoToken, login, expiracao, userOpt.get().isAdministrador());
             tokenRepo.save(token);
