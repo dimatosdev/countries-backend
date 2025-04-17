@@ -19,8 +19,12 @@ public class UsuarioController {
     }
 
     @GetMapping("/renovar-ticket")
-    public boolean renovar(@RequestParam String token) {
-        return authService.renovarToken(token);
+    public boolean renovar(@RequestHeader("Authorization") String authHeader) {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.replace("Bearer ", "");
+            return authService.renovarToken(token);
+        }
+        return false;
     }
 
 }

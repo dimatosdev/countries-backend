@@ -22,7 +22,8 @@ public class PaisController {
     private AutenticacaoService authService;
 
     @GetMapping("/listar")
-    public ResponseEntity<List<Pais>> listar(@RequestParam String token) {
+    public ResponseEntity<List<Pais>> listar(@RequestHeader("Authorization") String token) {
+        token = token.replace("Bearer ", "");
         if(!authService.tokenValido(token)) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         return ResponseEntity.ok(paisRepo.findAll());
     }
@@ -34,14 +35,17 @@ public class PaisController {
         Pais salvo = paisRepo.save(pais);
         return ResponseEntity.ok(salvo);
     }
+
     @GetMapping("/pesquisar")
-    public ResponseEntity<List<Pais>> pesquisar(@RequestParam String token, @RequestParam String filtro) {
+    public ResponseEntity<List<Pais>> pesquisar(@RequestHeader("Authorization") String token, @RequestParam String filtro) {
+        token = token.replace("Bearer ", "");
         if (!authService.tokenValido(token)) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         return ResponseEntity.ok(paisRepo.findByNomeContainingIgnoreCase(filtro));
     }
 
     @GetMapping("/excluir")
-    public ResponseEntity<Boolean> excluir(@RequestParam String token, @RequestParam Long id) {
+    public ResponseEntity<Boolean> excluir(@RequestHeader("Authorization") String token, @RequestParam Long id) {
+        token = token.replace("Bearer ", "");
         if (!authService.tokenValido(token)) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         if (!authService.isAdmin(token)) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         if (paisRepo.existsById(id)) {
@@ -50,6 +54,5 @@ public class PaisController {
         }
         return ResponseEntity.ok(false);
     }
-
 
 }
