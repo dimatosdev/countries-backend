@@ -52,7 +52,7 @@ Após subir a aplicação, acesse:
 #### Autenticação do usuário
 
 ```http
-POST /auth/login
+POST /usuario/autencicar/
 ```
 
 | Parâmetro | Tipo     | Descrição                    |
@@ -67,12 +67,12 @@ POST /auth/login
 #### Renovar Token de Acesso
 
 ```http
-GET /auth/renovar-ticket
+GET /usuario/renovar-ticket
 ```
 
-| Parâmetro | Tipo     | Descrição                    |
-|-----------|----------|------------------------------|
-| `token`         | `string` | **Obrigatório**. Token do usuário |
+| Parâmetro | Tipo     | Descrição                         |
+|-----------|----------|-----------------------------------|
+| `token`   | `string` | **Obrigatório**. Token do usuário |
 
 **Retorna:** true se reautenticou o token, false se não conseguiu reautenticar
 
@@ -84,11 +84,11 @@ GET /auth/renovar-ticket
 GET /pais/listar
 ```
 
-| Parâmetro       | Tipo     | Descrição                           |
-|-----------------|----------|--------------------------------------|
-| `token`         | `string` | **Obrigatório**. Token do usuário |
+| Parâmetro       | Tipo     | Descrição                                                          |
+|-----------------|----------|--------------------------------------------------------------------|
+| `Authorization` | `string` | **Obrigatório**. Token de autenticação no formato `Bearer <token>` |
 
-**Retorna:** todos os países cadastrados.
+**Retorna:** todos os países cadastrados em formato JSON.
 
 ---
 
@@ -98,10 +98,10 @@ GET /pais/listar
 GET /pais/pesquisar?filtro=nome
 ```
 
-| Parâmetro       | Tipo     | Descrição                           |
-|-----------------|----------|--------------------------------------|
-| `filtro`        | `string` | **Obrigatório**. Texto a ser pesquisado |
-| `token`         | `string` | **Obrigatório**. Token do usuário |
+| Parâmetro       | Tipo     | Descrição                                                          |
+|-----------------|----------|--------------------------------------------------------------------|
+| `Authorization` | `string` | **Obrigatório**. Token de autenticação no formato `Bearer <token>` |
+| `filtro`        | `string` | **Obrigatório**. Texto a ser pesquisado                            |
 
 **Retorna:** os países que contêm o valor informado no nome, sigla ou gentílico.
 
@@ -113,9 +113,9 @@ GET /pais/pesquisar?filtro=nome
 POST /pais/salvar?token=SEU_TOKEN
 ```
 
-| Parâmetro da URL | Tipo     | Descrição                             |
+| Parâmetro da URL | Tipo     | Descrição                              |
 |------------------|----------|----------------------------------------|
-| `token`          | `string` | **Obrigatório**. Token de usuário |
+| `token`          | `string` | **Obrigatório**. Token de usuário      |
 
 **Body (JSON):**
 
@@ -138,10 +138,10 @@ POST /pais/salvar?token=SEU_TOKEN
 DELETE /pais/excluir/{id}
 ```
 
-| Parâmetro | Tipo     | Descrição                           |
-|-----------|----------|--------------------------------------|
-| `id`      | `int`    | **Obrigatório**. ID do país a excluir |
-| `token`   | `string` | **Obrigatório**. Token de usuário |
+| Parâmetro       | Tipo     | Descrição                                                          |
+|-----------------|----------|--------------------------------------------------------------------|
+| `Authorization` | `string` | **Obrigatório**. Token de autenticação no formato `Bearer <token>` |
+| `id`            | `int`    | **Obrigatório**. ID do país a excluir                                    |
 
 **Retorna:** status de sucesso ou erro.
 
