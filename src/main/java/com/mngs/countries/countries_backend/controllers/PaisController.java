@@ -63,7 +63,7 @@ public class PaisController {
             @ApiResponse(responseCode = "403",
                     description = "Usuário não é administrador")
     })
-    public ResponseEntity<?> salvar(@RequestParam String token, @RequestBody PaisRequest paisRequest) {
+    public ResponseEntity<Pais> salvar(@RequestParam String token, @RequestBody PaisRequest paisRequest) {
         if (!authService.tokenValido(token)) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         if (!authService.isAdmin(token)) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 

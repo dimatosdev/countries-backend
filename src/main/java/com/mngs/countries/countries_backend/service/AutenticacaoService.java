@@ -6,6 +6,7 @@ import com.mngs.countries.countries_backend.entities.Usuario;
 import com.mngs.countries.countries_backend.repositories.TokenRepository;
 import com.mngs.countries.countries_backend.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,12 +25,15 @@ public class AutenticacaoService {
     @Autowired
     private TokenRepository tokenRepo;
 
+    @Value("${app.token.expiration.renewal:5}")
+    private long tokenExpirationRenewalMinutes;
+
     public UsuarioAutenticado autenticar(String login, String senha) {
         Optional<Usuario> userOpt = usuarioRepo.findByLogin(login);
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if (userOpt.isPresent() && encoder.matches(senha, userOpt.get().getSenha())) {
             String novoToken = UUID.randomUUID().toString();
-            LocalDateTime expiracao = LocalDateTime.now().plusMinutes(1);
+            LocalDateTime expiracao = LocalDateTime.now().plusMinutes(tokenExpirationRenewalMinutes);
 
             Token token = new Token(null, novoToken, login, expiracao, userOpt.get().isAdministrador());
             tokenRepo.save(token);
@@ -44,7 +48,7 @@ public class AutenticacaoService {
         Optional<Token> tokenOpt = tokenRepo.findByToken(token);
         if (tokenOpt.isPresent()) {
             Token t = tokenOpt.get();
-            t.setExpiracao(LocalDateTime.now().plusMinutes(5));
+            t.setExpiracao(LocalDateTime.now().plusMinutes(tokenExpirationRenewalMinutes));
             tokenRepo.save(t);
             return true;
         }
