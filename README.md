@@ -189,3 +189,4 @@ Se tiver dúvidas ou sugestões:
 
 - 📧 dimatosdev@gmail.com
 - 💼 [LinkedIn](https://www.linkedin.com/in/diegodematos)
+- [Passo-a-passo no Confluence](https://dimatoseng.atlassian.net/wiki/x/AQA-Ag)
